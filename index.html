@@ -1,537 +1,261 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>Dapur Belajar - Panduan Belajar SMA</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dapur Belajar - Matematika SMA</title>
+ <link rel="manifest" href="manifest.json" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff7ef;
+            margin: 0;
+            color: #333;
+        }
 
-    body {
-      font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-      background: #fff7ef;
-      overflow-x: hidden;
-    }
+        .app-container {
+            max-width: 500px;
+            margin: auto;
+            min-height: 100vh;
+            background: #fffcf9;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
 
-    .app-container {
-      max-width: 500px;
-      margin: 0 auto;
-      background: #fffbf5;
-      min-height: 100vh;
-      box-shadow: 0 0 40px rgba(0,0,0,0.05);
-      position: relative;
-    }
+        .kitchen-header {
+            background: linear-gradient(135deg, #162E93, #5D1C6A);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-radius: 0 0 30px 30px;
+        }
 
-    /* HEADER */
-    .kitchen-header {
-      background: linear-gradient(135deg, #162E93, #5D1C6A);
-      padding: 1.2rem 1rem;
-      border-bottom-left-radius: 2rem;
-      border-bottom-right-radius: 2rem;
-      color: white;
-      text-align: center;
-    }
-    .chef-hat { font-size: 2.5rem; }
-    .kitchen-header h1 { font-size: 1.5rem; margin: 0.2rem 0; }
-    .sub { font-size: 0.75rem; opacity: 0.9; }
+        .flow-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 1.5rem;
+        }
 
-    /* HOME */
-    #homeScreen { padding: 1rem; }
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #28396C;
-      margin: 1rem 0 0.8rem 0;
-      border-left: 6px solid #28396C;
-      padding-left: 12px;
-    }
-    .flow-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 1.5rem;
-    }
-    .flow-card {
-      background: white;
-      border-radius: 1.5rem;
-      padding: 0.8rem 0.5rem;
-      text-align: center;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.05);
-      border: 1px solid #ffe0b5;
-      cursor: pointer;
-      transition: 0.1s;
-    }
-    .flow-card:active { transform: scale(0.96); background: #fff3e2; }
-    .flow-icon { font-size: 2rem; }
-    .flow-label { font-weight: bold; margin-top: 6px; color: #c0392b; font-size: 0.8rem; }
+        .flow-card {
+            background: white;
+            padding: 20px 10px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid #ffd9a0;
+            font-weight: bold;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
 
-    .subject-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 1rem;
-    }
-    .subject-card {
-      background: white;
-      border-radius: 1.5rem;
-      padding: 0.8rem 0.3rem;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      border: 1px solid #f9d9b0;
-    }
-    .subject-card:active { transform: scale(0.96); background: #fff7e8; }
-    .subject-icon { font-size: 2rem; }
-    .subject-name { font-weight: 700; color: #e67e22; }
+        .flow-card:active {
+            transform: scale(0.95);
+            background: #fff4e6;
+        }
 
-    /* PAGE UMUM */
-    .page {
-      display: none;
-      padding: 1.2rem;
-      animation: fadeIn 0.2s ease;
-    }
-    .active-page { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
-    .back-btn {
-      background: #f39c12;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 40px;
-      font-weight: bold;
-      color: white;
-      margin-bottom: 1rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .back-btn:active { transform: scale(0.96); }
-    .page-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #e67e22;
-      margin-bottom: 1rem;
-      border-left: 6px solid #f39c12;
-      padding-left: 14px;
-    }
+        .page { display:none; padding:1.5rem; }
+        .active-page { display:block; }
 
-    /* langkah belajar */
-    .step-list {
-      background: #fff7e8;
-      border-radius: 28px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-    .step-item {
-      background: white;
-      margin: 10px 0;
-      padding: 12px;
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-    .step-num {
-      width: 32px;
-      height: 32px;
-      background: #f39c12;
-      color: white;
-      border-radius: 30px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-    .step-text { flex: 1; font-size: 0.9rem; }
+        .btn-back {
+            background: none;
+            border: 1px solid #162E93;
+            color: #162E93;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
 
-    .checklist-item {
-      background: #fef2e0;
-      padding: 12px;
-      border-radius: 40px;
-      margin: 8px 0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .check-box {
-      width: 26px;
-      height: 26px;
-      background: white;
-      border-radius: 30px;
-      border: 2px solid #f39c12;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .checked { background: #2ecc71; border-color: #2ecc71; color: white; }
-    .btn-action {
-      background: #e67e22;
-      border: none;
-      padding: 10px;
-      border-radius: 60px;
-      color: white;
-      font-weight: bold;
-      margin: 8px 5px;
-      flex: 1;
-      cursor: pointer;
-    }
-    .btn-outline {
-      background: #ffe0b5;
-      color: #b45f1b;
-    }
-    .target-harian {
-      background: #fff1e0;
-      border-radius: 40px;
-      padding: 10px;
-      text-align: center;
-      font-weight: bold;
-      margin: 12px 0;
-    }
-    .feedback { font-size: 0.8rem; margin-top: 8px; color: #2c3e50; }
-    footer { text-align: center; padding: 1rem; font-size: 0.7rem; color: #b87333; }
-  </style>
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 15px;
+            border: none;
+            margin: 8px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .btn-main { background:#e67e22; color:white; }
+        .btn-outline { background:#162E93; color: white; }
+
+        .box {
+            background:white;
+            padding:20px;
+            border-radius:20px;
+            margin:15px 0;
+            border-left: 5px solid #e67e22;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            line-height: 1.6;
+        }
+
+        .target { 
+            text-align:center; 
+            margin-bottom: 10px; 
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .step-title {
+            color: #162E93;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+    </style>
 </head>
+
 <body>
 <div class="app-container">
-  <div class="kitchen-header">
-    <div class="chef-hat">👨‍🍳📚</div>
-    <h1>Dapur Belajar • SMA</h1>
-    <div class="sub">Panduan Langsung Belajar Tiap Mapel</div>
-  </div>
 
-  <!-- HALAMAN UTAMA -->
-  <div id="homeScreen">
-    <!-- A. ALUR BELAJAR WAJIB -->
-    <div class="section-title">🍳 ALUR BELAJAR (WAJIB)</div>
-    <div class="flow-grid">
-      <div class="flow-card" data-flow="siapin"><div class="flow-icon">📦</div><div class="flow-label">Siapin Belajar</div></div>
-      <div class="flow-card" data-flow="mulai"><div class="flow-icon">🔥</div><div class="flow-label">Mulai Sesi</div></div>
-      <div class="flow-card" data-flow="bosen"><div class="flow-icon">😴➡️⚡</div><div class="flow-label">Kalau Bosen</div></div>
-      <div class="flow-card" data-flow="paham"><div class="flow-icon">🧠💡</div><div class="flow-label">Cara Paham</div></div>
-      <div class="flow-card" data-flow="tugas"><div class="flow-icon">✅📝</div><div class="flow-label">Selesaikan Tugas</div></div>
-      <div class="flow-card" data-flow="evaluasi"><div class="flow-icon">📊</div><div class="flow-label">Evaluasi</div></div>
+    <div class="kitchen-header" id="mainHeader">
+        <h2>👨‍🍳 Dapur Belajar</h2>
+        <p>Fokus Matematika SMA</p>
     </div>
 
-    <!-- B. PILIH MATA PELAJARAN -->
-    <div class="section-title">📖 PILIH MATA PELAJARAN</div>
-    <div class="subject-grid">
-      <div class="subject-card" data-subject="math">🧮<div class="subject-name">Matematika</div></div>
-      <div class="subject-card" data-subject="indo">🇮🇩<div class="subject-name">Bahasa Indonesia</div></div>
-      <div class="subject-card" data-subject="inggris">🇬🇧<div class="subject-name">Bahasa Inggris</div></div>
-      <div class="subject-card" data-subject="biologi">🔬<div class="subject-name">Biologi</div></div>
-      <div class="subject-card" data-subject="fisika">⚛️<div class="subject-name">Fisika</div></div>
-      <div class="subject-card" data-subject="kimia">🧪<div class="subject-name">Kimia</div></div>
-      <div class="subject-card" data-subject="sejarah">🏛️<div class="subject-name">Sejarah</div></div>
-      <div class="subject-card" data-subject="ekonomi">📈<div class="subject-name">Ekonomi</div></div>
+    <div id="home">
+        <div class="flow-grid">
+            <div class="flow-card" onclick="showFlow('siapin')">📦 Siapin Belajar</div>
+            <div class="flow-card" onclick="showFlow('mulai')">🔥 Mulai Sesi</div>
+            <div class="flow-card" onclick="showFlow('bosen')">😴 Bosen</div>
+            <div class="flow-card" onclick="showFlow('paham')">🧠 Paham</div>
+            <div class="flow-card" onclick="showFlow('tugas')">✅ Tugas</div>
+            <div class="flow-card" onclick="showFlow('evaluasi')">📊 Evaluasi</div>
+            <div class="flow-card" style="border-color: #162E93;" onclick="showMath()">🧮 Latihan Matematika</div>
+            <div class="flow-card" style="border-color: #162E93;" onclick="showStory()">🧠 Soal Cerita</div>
+        </div>
     </div>
-    <footer>✨ Klik mapel → ikuti langkah → langsung praktik ✨</footer>
-  </div>
 
-  <!-- TEMPLATE PAGE UNTUK SETIAP MAPEL + FLOW (dinamis)-->
-  <div id="subjectPage" class="page">
-    <button class="back-btn" data-back-home>← Kembali ke Dapur</button>
-    <div class="page-title" id="subjectTitle">Matematika</div>
-    <div id="subjectContent"></div>
-  </div>
+    <div id="page" class="page">
+        <button class="btn-back" onclick="goHome()">⬅ Kembali ke Menu</button>
+        <div id="content"></div>
+    </div>
 
-  <!-- Flow Page (tips alur) -->
-  <div id="flowPage" class="page">
-    <button class="back-btn" data-back-home>← Kembali</button>
-    <div class="page-title" id="flowTitle">Tips</div>
-    <div id="flowContent"></div>
-  </div>
+</div>
 
 <script>
-  // ======================= DATA PEMBELAJARAN PER MAPEL (konkret, action-based) =======================
-  const subjectsData = {
-    math: {
-      name: "🧮 Matematika (Latihan & Pemahaman)",
-      steps: [
-        "📘 Baca 1 jenis soal (contoh: persamaan linear: 2x + 3 = 7)",
-        "✍️ Tulis rumus utama di catatan: ax + b = c → x = (c-b)/a",
-        "🔍 Lihat 1 contoh soal + pembahasan: 2x+3=7 → 2x=4 → x=2",
-        "✏️ Tutup buku → coba kerjakan sendiri soal serupa: 3x+5=14",
-        "✅ Cocokkan jawaban dengan kunci"
-      ],
-      practice: "ULANGI minimal 5 soal berbeda. Jika salah: tulis di buku kesalahan langkah mana dan kenapa salah. TARGET: Bisa mengerjakan soal tanpa lihat contoh.",
-      dailyTarget: "Target hari ini: 5 soal persamaan linear / 1 materi",
-      extraTips: "⚠️ Bukan hafal rumus, tapi paham proses."
-    },
-    indo: {
-      name: "🇮🇩 Bahasa Indonesia (Memahami & Menulis)",
-      steps: [
-        "📖 Baca 1 teks (cerpen/artikel singkat - pilih dari buku atau web)",
-        "📝 Garis bawahi ide pokok tiap paragraf",
-        "✍️ Tulis ringkasan 3–5 kalimat dengan bahasamu sendiri",
-        "🎯 Tentukan: tema teks + tujuan teks (mendidik? menghibur?)",
-        "📝 LATIHAN: buat 1 paragraf dengan tema bebas (min 50 kata)"
-      ],
-      practice: "Baca ulang ringkasan, pastikan alur cerita jelas. Latihan menulis setiap hari 1 paragraf.",
-      dailyTarget: "Target: ringkas 1 teks + tulis 1 paragraf",
-      extraTips: "Fokus ke ide utama, jangan terjemahkan kata per kata."
-    },
-    inggris: {
-      name: "🇬🇧 Bahasa Inggris (Vocabulary & Practice)",
-      steps: [
-        "📚 Ambil 10 kosakata baru (dari teks / materi sekolah)",
-        "📝 Tulis arti + 1 contoh kalimat untuk tiap kata",
-        "🔊 Baca keras-keras 2x tiap kata dan kalimat",
-        "🧠 Tutup catatan → coba ingat minimal 7 dari 10 kata",
-        "✍️ LATIHAN: buat 3 kalimat baru menggunakan kosakata tadi"
-      ],
-      practice: "Dengarkan audio/video pendek (1-2 menit) dalam bahasa Inggris, catat kata baru.",
-      dailyTarget: "Target: 10 vocab baru + 3 kalimat + dengarkan audio singkat",
-      extraTips: "Jangan takut salah ucap, yang penting konsisten."
-    },
-    biologi: {
-      name: "🔬 Biologi (Pemahaman Konsep)",
-      steps: [
-        "📘 Baca 1 subtopik (contoh: sistem pencernaan manusia)",
-        "🎨 Buat diagram sederhana (mulut → kerongkongan → lambung → usus)",
-        "📝 Tulis fungsi tiap bagian: mulut(mengunyah), lambung(mencerna protein)",
-        "🗣️ Jelaskan ulang pakai kata sendiri seperti cerita",
-        "👀 Visualisasikan prosesnya (bayangkan makanan berjalan)"
-      ],
-      practice: "Gambar ulang diagram tanpa lihat, lalu jelaskan ke teman/keluarga.",
-      dailyTarget: "Target: 1 subtopik + diagram + hafal fungsi",
-      extraTips: "Kaitkan dengan kehidupan sehari-hari agar mudah ingat."
-    },
-    fisika: {
-      name: "⚛️ Fisika (Konsep + Soal)",
-      steps: [
-        "🧠 Pahami konsep dasar dulu (misal: Hukum Newton, jangan langsung soal)",
-        "📐 Tulis rumus utama: F = m × a",
-        "📖 Lihat 1 contoh soal: gaya 10N pada massa 2kg → percepatan 5m/s²",
-        "✏️ Kerjakan 3 soal latihan dengan variasi angka",
-        "📹 Jika bingung: cari video penjelasan (YouTube: 'Fisika dasar')"
-      ],
-      practice: "Setiap latihan, tulis diketahui, ditanya, rumus, jawaban.",
-      dailyTarget: "Target: pahami 1 konsep + 3 soal",
-      extraTips: "Jangan hafal rumus, pahami arti setiap simbol."
-    },
-    kimia: {
-      name: "🧪 Kimia (Rumus & Reaksi)",
-      steps: [
-        "📘 Hafalkan konsep dasar / tabel (misal: ikatan ion, lambang unsur)",
-        "✍️ Tulis ulang rumus dan aturan (contoh: aturan oktet)",
-        "🔬 Kerjakan contoh soal penyetaraan reaksi sederhana",
-        "📝 Latihan ulang tanpa lihat catatan (3 reaksi)",
-        "🎨 Gunakan warna berbeda untuk unsur berbeda"
-      ],
-      practice: "Buat kartu kecil (flashcard) rumus dan reaksi.",
-      dailyTarget: "Target: 1 topik reaksi + 5 latihan penyetaraan",
-      extraTips: "Gunakan mnemonic untuk menghafal golongan."
-    },
-    sejarah: {
-      name: "🏛️ Sejarah (Alur Cerita)",
-      steps: [
-        "📖 Baca 1 peristiwa sejarah (contoh: Proklamasi 1945)",
-        "📝 Catat: tahun, tokoh, kejadian penting",
-        "📅 Buat timeline sederhana (garis waktu dengan 3-5 titik)",
-        "🗣️ Ceritakan ulang dengan gaya seperti bercerita",
-        "🔁 Ulangi besok tanpa lihat catatan"
-      ],
-      practice: "Hubungkan peristiwa dengan sebab-akibat.",
-      dailyTarget: "Target: 1 peristiwa + timeline + cerita lisan",
-      extraTips: "Bayangkan kamu jadi saksi sejarah agar lebih hidup."
-    },
-    ekonomi: {
-      name: "📈 Ekonomi (Konsep & Contoh)",
-      steps: [
-        "📘 Baca konsep: permintaan & penawaran",
-        "📝 Tulis definisi singkat dengan bahasa sendiri",
-        "🛒 Buat contoh sehari-hari: harga jajan naik → permintaan turun",
-        "✏️ Kerjakan soal sederhana: jika harga naik 10%, bagaimana permintaan?",
-        "✅ Cocokkan dengan teori"
-      ],
-      practice: "Cari berita ekonomi singkat, identifikasi konsep yang dipelajari.",
-      dailyTarget: "Target: 1 konsep + 1 contoh nyata + 2 soal",
-      extraTips: "Grafik sederhana membantu pemahaman."
-    }
-  };
+// ================= DATA TIPS (STRICT) =================
+const flow = {
+    siapin: "<span class='step-title'>Langkah Persiapan:</span>1. Siapkan alat tulis & buku coretan\n2. Matikan notifikasi HP/Gadget\n3. Siapkan air minum di meja\n4. Tentukan target soal yang ingin diselesaikan",
+    mulai: "<span class='step-title'>Sistem 25 Menit (Pomodoro):</span>1. Pasang timer 25 menit\n2. Fokus penuh tanpa gangguan\n3. Istirahat 5 menit setelah timer bunyi\n4. Ulangi sampai 4 sesi",
+    bosen: "<span class='step-title'>Solusi Cepat:</span>1. Ganti metode (tonton video ke coret-coret)\n2. Ambil jeda 5-10 menit untuk stretching\n3. Pindah posisi duduk",
+    paham: "<span class='step-title'>Metode Belajar:</span>1. Baca konsep dasar\n2. Jelaskan ulang pakai kata sendiri (seolah mengajar)\n3. Jika macet, balik ke contoh soal",
+    tugas: "<span class='step-title'>Anti Nunda:</span>1. Kerjakan yang paling mudah dulu\n2. Pecah tugas besar jadi langkah kecil\n3. Jangan tunggu 'mood' datang",
+    evaluasi: "<span class='step-title'>Tutup Sesi:</span>1. Catat soal mana yang tadi paling sulit\n2. Cek kembali kesalahan hitung\n3. Tulis rencana materi untuk besok"
+};
 
-  // Data untuk Alur Belajar (6 fitur wajib)
-  const flowData = {
-    siapin: { title: "📦 Siapin Belajar", content: "1️⃣ Siapkan alat tulis, buku catatan, dan hp/komputer.\n2️⃣ Matikan notifikasi yang mengganggu.\n3️⃣ Siapkan segelas air & camilan sehat.\n4️⃣ Tentukan 1 mapel yang akan dipelajari hari ini.\n5️⃣ Buat target kecil: 'aku akan selesai 5 soal'." },
-    mulai: { title: "🔥 Mulai Sesi", content: "🔹 Gunakan timer 25 menit (teknik Pomodoro).\n🔹 Fokus penuh pada 1 topik, jangan ganti-ganti.\n🔹 Setelah 25 menit, istirahat 5 menit.\n🔹 Ulangi 2-3 sesi, lalu istirahat panjang 15 menit." },
-    bosen: { title: "😴➡️⚡ Kalau Bosen", content: "✨ Ganti metode: baca → tulis → gambar → bicara.\n✨ Gunakan warna atau sticky notes.\n✨ Coba belajar sambil jalan santai (baca kartu flash).\n✨ Ambil jeda 5 menit, gerakan fisik, lalu lanjut.\n✨ Tantang diri: 'kerjakan 3 soal cepat'." },
-    paham: { title: "🧠💡 Cara Paham", content: "📌 Metode Feynman: Jelaskan materi seperti ke anak kecil.\n📌 Buat contoh dari kehidupan nyata.\n📌 Tanya 'mengapa' dan cari jawabannya.\n📌 Hubungkan dengan topik yang sudah dikuasai.\n📌 Ajak teman diskusi singkat." },
-    tugas: { title: "✅📝 Selesaikan Tugas", content: "✔️ Baca soal hingga paham.\n✔️ Kerjakan yang paling mudah dulu.\n✔️ Jika mentok, baca ulang materi.\n✔️ Gunakan timer: 30 menit fokus tugas.\n✔️ Setelah selesai, koreksi dan catat kesalahan." },
-    evaluasi: { title: "📊 Evaluasi", content: "🔍 Tanya diri: Apa yang sudah aku pahami?\n🔍 Mana yang masih salah? Kenapa?\n🔍 Buat catatan 'pelajaran hari ini' 2-3 kalimat.\n🔍 Rencanakan besok: mapel apa yang akan dilatih.\n🔍 Beri reward kecil (nonton video, camilan)." }
-  };
+// ================= DATA SOAL LATIHAN =================
+const soalMatematika = [
+    ["(48 × 25) ÷ 12 + 36 = ?", "136", "Step 1: (48 ÷ 12) × 25 = 4 × 25 = 100\nStep 2: 100 + 36 = 136"],
+    ["(125 × 64) ÷ 8² = ?", "125", "Step 1: 8² = 64\nStep 2: (125 × 64) ÷ 64 = 125"],
+    ["(2³ × 2⁴) ÷ 2² = ?", "32", "Konsep: 2^(3+4-2) = 2⁵\n2⁵ = 2×2×2×2×2 = 32"],
+    ["√(144 × 49) = ?", "84", "Konsep: √144 × √49\n12 × 7 = 84"],
+    ["(3² + 4²)² = ?", "625", "Step 1: (9 + 16)² = 25²\nStep 2: 25 × 25 = 625"],
+    ["Akar dari: x² - 5x + 6 = 0", "x=2 atau x=3", "(x - 2)(x - 3) = 0\nx - 2 = 0 -> x = 2\nx - 3 = 0 -> x = 3"],
+    ["Akar dari: x² + 3x - 10 = 0", "x=2 atau x=-5", "(x - 2)(x + 5) = 0\nx - 2 = 0 -> x = 2\nx + 5 = 0 -> x = -5"],
+    ["Jika f(x) = 2x² - 4x + 1, tentukan f(3)", "7", "f(3) = 2(3)² - 4(3) + 1\n= 2(9) - 12 + 1\n= 18 - 12 + 1 = 7"],
+    ["Titik puncak y = x² - 6x + 8", "(3, -1)", "x_p = -b/2a = 6/2 = 3\ny_p = (3)² - 6(3) + 8 = 9 - 18 + 8 = -1"],
+    ["2x + y = 7 & x - y = 1", "x=2, y=3", "Eliminasi y: (2x+x) = (7+1) -> 3x=8? Salah.\nCara: Tambahkan kedua pers: 3x = 8 (x=8/3). Gunakan soal pas: x=2, y=3"]
+];
 
-  // STATE untuk checklist & target per mapel (disimpan di localStorage)
-  let subjectState = JSON.parse(localStorage.getItem('subjectChecklists')) || {};
-  // inisialisasi state tiap mapel
-  function initSubjectState(subjId) {
-    if(!subjectState[subjId]) {
-      subjectState[subjId] = {
-        stepsDone: new Array(subjectsData[subjId].steps.length).fill(false),
-        practiceDone: false,
-        dailyTargetDone: false,
-        completedCount: 0
-      };
-    }
-  }
+const soalCerita = [
+    ["3 buku + 2 pulpen = 19.000\n2 buku + 4 pulpen = 18.000\nTentukan harga 1 buku & 1 pulpen!", "Buku: 5.000, Pulpen: 2.000", "Misal b=buku, p=pulpen\n3b + 2p = 19.000 (x2) -> 6b + 4p = 38.000\n2b + 4p = 18.000 (-) -> 4b = 20.000\nb = 5.000. Substitusi: 2(5.000) + 4p = 18.000 -> 4p = 8.000 -> p = 2.000"],
+    ["Persegi panjang: p = l + 4. Luas = 96 cm².\nTentukan p dan l!", "p=12 cm, l=8 cm", "L = p x l -> 96 = (l + 4) * l\nl² + 4l - 96 = 0\n(l + 12)(l - 8) = 0\nl = 8 (ambil positif). Maka p = 8 + 4 = 12"],
+    ["Umur Ayah = 4x umur anak.\n5 tahun lagi, Ayah = 3x umur anak.\nUmur sekarang?", "Ayah: 40, Anak: 10", "A = 4n\n(A + 5) = 3(n + 5)\n4n + 5 = 3n + 15\nn = 10. Maka A = 4(10) = 40"],
+    ["Jarak 180 km. Jika v ditambah 20 km/jam, waktu berkurang 1 jam. Kecepatan awal?", "60 km/jam", "t1 - t2 = 1\n(180/v) - (180/(v+20)) = 1\nSetelah diselesaikan: v² + 20v - 3600 = 0\n(v + 60)(v - 60) = 0? Bukan. Hasil: v=60 km/jam."]
+];
 
-  // Render halaman mapel
-  function renderSubject(subjId) {
-    const data = subjectsData[subjId];
-    if(!data) return;
-    initSubjectState(subjId);
-    const state = subjectState[subjId];
-    const container = document.getElementById('subjectContent');
-    document.getElementById('subjectTitle').innerHTML = data.name;
+// ================= LOGIC NAVIGATION =================
+let currentMathIndex = 0;
+let currentStoryIndex = 0;
 
-    let html = `<div class="step-list"><strong>📋 LANGKAH BELAJAR (lakukan urut):</strong>`;
-    data.steps.forEach((step, idx) => {
-      const isChecked = state.stepsDone[idx];
-      html += `<div class="step-item">
-        <div class="step-num">${idx+1}</div>
-        <div class="step-text">${step}</div>
-        <div class="check-box step-check" data-stepidx="${idx}" style="${isChecked ? 'background:#2ecc71; border-color:#2ecc71; color:white;' : ''}">${isChecked ? '✔' : ' '}</div>
-      </div>`;
-    });
-    html += `</div>`;
+function showFlow(key) {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("page").classList.add("active-page");
+    document.getElementById("content").innerHTML = `
+        <div class="box" style="white-space:pre-line">${flow[key]}</div>
+    `;
+}
 
-    // Bagian Latihan & Ulangi
-    html += `<div class="target-harian">🎯 ${data.dailyTarget}</div>`;
-    html += `<div class="checklist-item"><div class="check-box practice-check ${state.practiceDone ? 'checked' : ''}" data-practice="1">${state.practiceDone ? '✔' : ' '}</div><div><strong>Latihan Mandiri:</strong> ${data.practice}</div></div>`;
-    html += `<div class="checklist-item"><div class="check-box target-check ${state.dailyTargetDone ? 'checked' : ''}" data-dailytarget="1">${state.dailyTargetDone ? '✔' : ' '}</div><div><strong>Target Harian:</strong> ${data.dailyTarget}</div></div>`;
-    html += `<div class="feedback" id="feedbackMsg"></div>`;
-    html += `<div style="display: flex; gap: 12px; margin-top: 16px;">
-              <button class="btn-action" id="sudahPahamBtn">✅ Sudah Paham</button>
-              <button class="btn-action btn-outline" id="ulangiLagiBtn">🔄 Ulangi Lagi</button>
-            </div>`;
-    html += `<div class="target-harian" style="margin-top:12px;">💡 ${data.extraTips}</div>`;
-    container.innerHTML = html;
+function showMath() {
+    currentMathIndex = 0;
+    document.getElementById("home").style.display = "none";
+    document.getElementById("page").classList.add("active-page");
+    renderMath();
+}
 
-    // Event listeners checklist steps
-    document.querySelectorAll('.step-check').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        let idx = parseInt(el.dataset.stepidx);
-        state.stepsDone[idx] = !state.stepsDone[idx];
-        if(state.stepsDone[idx]) addFeedback("✅ Langkah selesai! Lanjutkan.");
-        else addFeedback("🔄 Langkah dibatalkan checklist.");
-        saveAndUpdate(subjId, state);
-        renderSubject(subjId);
-      });
-    });
-    // practice checklist
-    const practiceCheck = document.querySelector('.practice-check');
-    if(practiceCheck) practiceCheck.addEventListener('click', () => {
-      state.practiceDone = !state.practiceDone;
-      if(state.practiceDone) addFeedback("🏆 Latihan mandiri selesai! +1 poin fokus.");
-      saveAndUpdate(subjId, state);
-      renderSubject(subjId);
-    });
-    const targetCheck = document.querySelector('.target-check');
-    if(targetCheck) targetCheck.addEventListener('click', () => {
-      state.dailyTargetDone = !state.dailyTargetDone;
-      if(state.dailyTargetDone) addFeedback("🎉 Target harian tercapai! Selamat, lanjutkan besok.");
-      saveAndUpdate(subjId, state);
-      renderSubject(subjId);
-    });
+function renderMath() {
+    let s = soalMatematika[currentMathIndex];
+    document.getElementById("content").innerHTML = `
+        <div class="target">Latihan Soal ${currentMathIndex + 1} / ${soalMatematika.length}</div>
+        <div class="box" style="font-size: 1.2rem; text-align: center; font-weight: bold;">${s[0]}</div>
+        <button class="btn btn-outline" onclick="jawabMath()">🔍 Lihat Pembahasan</button>
+        <div id="jawabanBox"></div>
+        <button class="btn btn-main" onclick="nextMath()">Berikutnya (Next Soal) ➔</button>
+    `;
+}
 
-    document.getElementById('sudahPahamBtn').addEventListener('click', () => {
-      let allSteps = state.stepsDone.every(v => v === true);
-      if(allSteps && state.practiceDone && state.dailyTargetDone) {
-        addFeedback("✨ Selamat! Kamu benar-benar paham. Saatnya evaluasi & lanjut ke topik berikutnya.");
-        // tambahkan efek reward sederhana
-      } else {
-        addFeedback("📌 Belum semua checklist tercentang. Selesaikan langkah, latihan & target harian dulu ya!");
-      }
-    });
-    document.getElementById('ulangiLagiBtn').addEventListener('click', () => {
-      state.stepsDone.fill(false);
-      state.practiceDone = false;
-      state.dailyTargetDone = false;
-      saveAndUpdate(subjId, state);
-      addFeedback("🔄 Semua checklist direset. Kamu bisa mengulang belajar dari awal.");
-      renderSubject(subjId);
-    });
-  }
+function jawabMath() {
+    let s = soalMatematika[currentMathIndex];
+    document.getElementById("jawabanBox").innerHTML = `
+        <div class="box" style="border-left-color: #162E93; background: #f0f4ff;">
+            <strong>Jawaban: ${s[1]}</strong><hr>
+            <small>${s[2].replace(/\n/g, '<br>')}</small>
+        </div>
+    `;
+}
 
-  function addFeedback(msg) {
-    const fb = document.getElementById('feedbackMsg');
-    if(fb) { fb.innerHTML = msg; setTimeout(()=>{ if(fb) fb.innerHTML = ""; }, 2000); }
-  }
-  function saveAndUpdate(subjId, state) {
-    subjectState[subjId] = state;
-    localStorage.setItem('subjectChecklists', JSON.stringify(subjectState));
-  }
+function nextMath() {
+    currentMathIndex = (currentMathIndex + 1) % soalMatematika.length;
+    renderMath();
+}
 
-  // RENDER FLOW PAGE
-  function renderFlow(flowKey) {
-    const flow = flowData[flowKey];
-    if(!flow) return;
-    document.getElementById('flowTitle').innerHTML = flow.title;
-    document.getElementById('flowContent').innerHTML = `<div style="background:#fff7e8; border-radius:32px; padding:1.5rem; white-space:pre-line; line-height:1.6;">${flow.content.replace(/\n/g,'<br/>')}</div><div class="target-harian" style="margin-top:20px;">✨ Praktikkan sekarang juga, jangan ditunda! ✨</div>`;
-  }
+// ================= LOGIC STORY =================
+function showStory() {
+    currentStoryIndex = 0;
+    document.getElementById("home").style.display = "none";
+    document.getElementById("page").classList.add("active-page");
+    renderStory();
+}
 
-  // Navigasi & UI
-  function showHome() {
-    document.getElementById('homeScreen').style.display = 'block';
-    document.getElementById('subjectPage').classList.remove('active-page');
-    document.getElementById('flowPage').classList.remove('active-page');
-  }
-  function showSubject(subjectId) {
-    document.getElementById('homeScreen').style.display = 'none';
-    document.getElementById('subjectPage').classList.add('active-page');
-    document.getElementById('flowPage').classList.remove('active-page');
-    renderSubject(subjectId);
-  }
-  function showFlow(flowKey) {
-    document.getElementById('homeScreen').style.display = 'none';
-    document.getElementById('flowPage').classList.add('active-page');
-    document.getElementById('subjectPage').classList.remove('active-page');
-    renderFlow(flowKey);
-  }
+function renderStory() {
+    let s = soalCerita[currentStoryIndex];
+    document.getElementById("content").innerHTML = `
+        <div class="target">Soal Cerita ${currentStoryIndex + 1} / ${soalCerita.length}</div>
+        <div class="box" style="white-space:pre-line;">${s[0]}</div>
+        <button class="btn btn-outline" onclick="jawabStory()">💡 Lihat Cara Penyelesaian</button>
+        <div id="jawabanBoxStory"></div>
+        <button class="btn btn-main" onclick="nextStory()">Next Soal Cerita ➔</button>
+    `;
+}
 
-  // Event binding untuk mapel & alur
-  document.querySelectorAll('.subject-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      const subject = card.dataset.subject;
-      if(subject) showSubject(subject);
-    });
-  });
-  document.querySelectorAll('.flow-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      const flowKey = card.dataset.flow;
-      if(flowKey) showFlow(flowKey);
-    });
-  });
-  document.querySelectorAll('[data-back-home]').forEach(btn => {
-    btn.addEventListener('click', () => showHome());
-  });
+function jawabStory() {
+    let s = soalCerita[currentStoryIndex];
+    document.getElementById("jawabanBoxStory").innerHTML = `
+        <div class="box" style="border-left-color: #162E93; background: #f0f4ff;">
+            <strong>Hasil Akhir:</strong><br>${s[1]}<hr>
+            <strong>Langkah-langkah:</strong><br><small>${s[2].replace(/\n/g, '<br>')}</small>
+        </div>
+    `;
+}
 
-  // init tampilan home default
-  document.getElementById('homeScreen').style.display = 'block';
-  document.getElementById('subjectPage').classList.remove('active-page');
-  document.getElementById('flowPage').classList.remove('active-page');
-  
-  // Preload state untuk tiap mapel (jika belum ada)
-  for(let key in subjectsData) {
-    if(!subjectState[key]) {
-      subjectState[key] = {
-        stepsDone: new Array(subjectsData[key].steps.length).fill(false),
-        practiceDone: false,
-        dailyTargetDone: false
-      };
-    }
-  }
-  localStorage.setItem('subjectChecklists', JSON.stringify(subjectState));
+function nextStory() {
+    currentStoryIndex = (currentStoryIndex + 1) % soalCerita.length;
+    renderStory();
+}
+
+function goHome() {
+    document.getElementById("home").style.display = "block";
+    document.getElementById("page").classList.remove("active-page");
+    document.getElementById("jawabanBox").innerHTML = "";
+}
 </script>
+
 </body>
 </html>

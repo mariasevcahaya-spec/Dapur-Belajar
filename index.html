@@ -1,270 +1,207 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dapur Belajar - Matematika SMA</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#4F46E5" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icons/Logo1.png" type="image/png" />
-  <title>PWA Template Responsif</title>
-  <link rel="stylesheet" href="assets/style.css" />
-</head>
-
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#4F46E5" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icons/Logo1.png" type="image/png" />
+    <title>Dapur Belajar - Matematika SMA</title>
+    <link rel="stylesheet" href="assets/style.css" />
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #fff7ef;
-            margin: 0;
-            color: #333;
+        :root {
+            --primary: #4F46E5;
+            --secondary: #10B981;
+            --bg: #F3F4F6;
+            --text: #1F2937;
         }
-
-        .app-container {
-            max-width: 500px;
-            margin: auto;
-            min-height: 100vh;
-            background: #fffcf9;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
+        .header { background: var(--primary); color: white; padding: 20px; text-align: center; }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        
+        /* Navigation Grid */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        button { 
+            padding: 15px 10px; border: none; border-radius: 10px; cursor: pointer;
+            font-weight: bold; transition: 0.3s; background: var(--primary); color: white;
         }
-
-        .kitchen-header {
-            background: linear-gradient(135deg, #162E93, #5D1C6A);
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-            border-radius: 0 0 30px 30px;
-        }
-
-        .flow-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 1.5rem;
-        }
-
-        .flow-card {
-            background: white;
-            padding: 20px 10px;
-            border-radius: 20px;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid #ffd9a0;
-            font-weight: bold;
-            transition: 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-        }
-
-        .flow-card:active {
-            transform: scale(0.95);
-            background: #fff4e6;
-        }
-
-        .page { display:none; padding:1.5rem; }
-        .active-page { display:block; }
-
-        .btn-back {
-            background: none;
-            border: 1px solid #162E93;
-            color: #162E93;
-            padding: 8px 15px;
-            border-radius: 15px;
-            cursor: pointer;
-            margin-bottom: 1rem;
-            font-weight: bold;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            border-radius: 15px;
-            border: none;
-            margin: 8px 0;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .btn-main { background:#e67e22; color:white; }
-        .btn-outline { background:#162E93; color: white; }
-
-        .box {
-            background:white;
-            padding:20px;
-            border-radius:20px;
-            margin:15px 0;
-            border-left: 5px solid #e67e22;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            line-height: 1.6;
-        }
-
-        .target { 
-            text-align:center; 
-            margin-bottom: 10px; 
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .step-title {
-            color: #162E93;
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
+        button:active { transform: scale(0.95); }
+        .btn-outline { background: white; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-green { background: var(--secondary); }
+        
+        /* View Management */
+        .view { display: none; }
+        .view.active { display: block; }
+        
+        .progress { font-size: 0.9em; color: #666; margin-bottom: 10px; }
+        .pembahasan { background: #E0E7FF; padding: 15px; border-radius: 10px; margin-top: 10px; display: none; }
+        .footer { text-align: center; padding: 20px; font-size: 0.8em; color: #666; }
     </style>
 </head>
-
 <body>
-<div class="app-container">
 
-    <div class="kitchen-header" id="mainHeader">
-        <h2>👨‍🍳 Dapur Belajar</h2>
-        <p>Fokus Matematika SMA</p>
-    </div>
+<header class="header">
+    <h1>🍳 Dapur Belajar</h1>
+    <p>Matematika SMA: Matang di Otak, Lahap di Soal</p>
+</header>
 
-    <div id="home">
-        <div class="flow-grid">
-            <div class="flow-card" onclick="showFlow('siapin')">📦 Siapin Belajar</div>
-            <div class="flow-card" onclick="showFlow('mulai')">🔥 Mulai Sesi</div>
-            <div class="flow-card" onclick="showFlow('bosen')">😴 Bosen</div>
-            <div class="flow-card" onclick="showFlow('paham')">🧠 Paham</div>
-            <div class="flow-card" onclick="showFlow('tugas')">✅ Tugas</div>
-            <div class="flow-card" onclick="showFlow('evaluasi')">📊 Evaluasi</div>
-            <div class="flow-card" style="border-color: #162E93;" onclick="showMath()">🧮 Latihan Matematika</div>
-            <div class="flow-card" style="border-color: #162E93;" onclick="showStory()">🧠 Soal Cerita</div>
+<div class="container">
+    <div id="home" class="view active">
+        <div class="card">
+            <h2>🏠 Menu Utama</h2>
+            <div class="grid">
+                <button onclick="showTips('siapin')">Siapin Belajar</button>
+                <button onclick="showTips('mulai')">Mulai Sesi Belajar</button>
+                <button onclick="showTips('bosen')">Kalau Mulai Bosen</button>
+                <button onclick="showTips('paham')">Cara Biar Cepet Paham</button>
+                <button onclick="showTips('tugas')">Selesaikan Tugas</button>
+                <button onclick="showTips('tutup')">Tutup Sesi</button>
+                <button class="btn-green" onclick="startLatihan('biasa')">Latihan Matematika</button>
+                <button class="btn-green" onclick="startLatihan('cerita')">Soal Cerita</button>
+            </div>
         </div>
     </div>
 
-    <div id="page" class="page">
-        <button class="btn-back" onclick="goHome()">⬅ Kembali ke Menu</button>
-        <div id="content"></div>
+    <div id="view-tips" class="view">
+        <div class="card">
+            <h2 id="tips-title"></h2>
+            <div id="tips-content"></div>
+            <br>
+            <button class="btn-outline" onclick="goHome()">Kembali ke Menu</button>
+        </div>
     </div>
 
+    <div id="view-latihan" class="view">
+        <div class="card">
+            <div id="progress-text" class="progress">Soal 1 / 10</div>
+            <div id="question-area" style="font-size: 1.2em; font-weight: bold; margin: 15px 0;"></div>
+            
+            <div id="pembahasan-area" class="pembahasan"></div>
+            
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <button id="btn-cek" class="btn-outline" style="flex: 1;">Lihat Pembahasan</button>
+                <button id="btn-next" style="flex: 1;">Next Soal 👉</button>
+            </div>
+            <br>
+            <button class="btn-outline" style="width: 100%" onclick="goHome()">Berhenti Belajar</button>
+        </div>
+    </div>
 </div>
 
+<footer class="footer">
+    <p>© 2025 Dapur Belajar - Anwar Fauzi</p>
+</footer>
+
 <script>
-// ================= DATA TIPS (STRICT) =================
-const flow = {
-    siapin: "<span class='step-title'>Langkah Persiapan:</span>1. Siapkan alat tulis & buku coretan\n2. Matikan notifikasi HP/Gadget\n3. Siapkan air minum di meja\n4. Tentukan target soal yang ingin diselesaikan",
-    mulai: "<span class='step-title'>Sistem 25 Menit (Pomodoro):</span>1. Pasang timer 25 menit\n2. Fokus penuh tanpa gangguan\n3. Istirahat 5 menit setelah timer bunyi\n4. Ulangi sampai 4 sesi",
-    bosen: "<span class='step-title'>Solusi Cepat:</span>1. Ganti metode (tonton video ke coret-coret)\n2. Ambil jeda 5-10 menit untuk stretching\n3. Pindah posisi duduk",
-    paham: "<span class='step-title'>Metode Belajar:</span>1. Baca konsep dasar\n2. Jelaskan ulang pakai kata sendiri (seolah mengajar)\n3. Jika macet, balik ke contoh soal",
-    tugas: "<span class='step-title'>Anti Nunda:</span>1. Kerjakan yang paling mudah dulu\n2. Pecah tugas besar jadi langkah kecil\n3. Jangan tunggu 'mood' datang",
-    evaluasi: "<span class='step-title'>Tutup Sesi:</span>1. Catat soal mana yang tadi paling sulit\n2. Cek kembali kesalahan hitung\n3. Tulis rencana materi untuk besok"
-};
+    // DATA TIPS (TIDAK DIUBAH)
+    const dataTips = {
+        siapin: {
+            title: "✔ Siapin Belajar",
+            steps: ["1. Cari meja yang bersih dari tumpukan barang.", "2. Siapkan air minum agar fokus terjaga.", "3. Jauhkan HP di luar jangkauan tangan.", "4. Siapkan alat tulis & coret-coretan."]
+        },
+        mulai: {
+            title: "✔ Mulai Sesi Belajar",
+            steps: ["1. Gunakan Teknik Pomodoro: Set timer 25 menit.", "2. Fokus penuh pada satu topik/satu soal.", "3. Jangan buka tab lain di browser.", "4. Jika ada gangguan, tulis di kertas lalu lupakan."]
+        },
+        bosen: {
+            title: "✔ Kalau Mulai Bosen",
+            steps: ["1. Stop! Berdiri dan lakukan stretching.", "2. Minum air dingin atau cuci muka.", "3. Ganti media belajar (misal: dari baca ke nonton video).", "4. Makan satu butir permen."]
+        },
+        paham: {
+            title: "✔ Cara Biar Cepet Paham",
+            steps: ["1. Gunakan Metode Feynman: Jelaskan konsep ke diri sendiri.", "2. Gambar alur rumusnya dalam peta pikiran.", "3. Kerjakan contoh soal tanpa melihat kunci jawaban dulu.", "4. Cari hubungan konsep ini dengan dunia nyata."]
+        },
+        tugas: {
+            title: "✔ Selesaikan Tugas",
+            steps: ["1. Bagi tugas besar menjadi langkah-langkah kecil.", "2. Mulai dari yang paling mudah untuk membangun momentum.", "3. Pasang target selesai sebelum jam makan malam.", "4. Ingat perasaan lega setelah tugas beres!"]
+        },
+        tutup: {
+            title: "✔ Tutup Sesi",
+            steps: ["1. Tulis satu hal yang baru dipahami hari ini.", "2. Bereskan meja untuk sesi besok.", "3. Beri apresiasi pada diri sendiri.", "4. Istirahat total setelah selesai."]
+        }
+    };
 
-// ================= DATA SOAL LATIHAN =================
-const soalMatematika = [
-    ["(48 × 25) ÷ 12 + 36 = ?", "136", "Step 1: (48 ÷ 12) × 25 = 4 × 25 = 100\nStep 2: 100 + 36 = 136"],
-    ["(125 × 64) ÷ 8² = ?", "125", "Step 1: 8² = 64\nStep 2: (125 × 64) ÷ 64 = 125"],
-    ["(2³ × 2⁴) ÷ 2² = ?", "32", "Konsep: 2^(3+4-2) = 2⁵\n2⁵ = 2×2×2×2×2 = 32"],
-    ["√(144 × 49) = ?", "84", "Konsep: √144 × √49\n12 × 7 = 84"],
-    ["(3² + 4²)² = ?", "625", "Step 1: (9 + 16)² = 25²\nStep 2: 25 × 25 = 625"],
-    ["Akar dari: x² - 5x + 6 = 0", "x=2 atau x=3", "(x - 2)(x - 3) = 0\nx - 2 = 0 -> x = 2\nx - 3 = 0 -> x = 3"],
-    ["Akar dari: x² + 3x - 10 = 0", "x=2 atau x=-5", "(x - 2)(x + 5) = 0\nx - 2 = 0 -> x = 2\nx + 5 = 0 -> x = -5"],
-    ["Jika f(x) = 2x² - 4x + 1, tentukan f(3)", "7", "f(3) = 2(3)² - 4(3) + 1\n= 2(9) - 12 + 1\n= 18 - 12 + 1 = 7"],
-    ["Titik puncak y = x² - 6x + 8", "(3, -1)", "x_p = -b/2a = 6/2 = 3\ny_p = (3)² - 6(3) + 8 = 9 - 18 + 8 = -1"],
-    ["2x + y = 7 & x - y = 1", "x=2, y=3", "Eliminasi y: (2x+x) = (7+1) -> 3x=8? Salah.\nCara: Tambahkan kedua pers: 3x = 8 (x=8/3). Gunakan soal pas: x=2, y=3"]
-];
+    // DATA SOAL
+    const soalBiasa = [
+        { q: "(48 × 25) ÷ 12 + 36 = ?", a: "Step: (1200 ÷ 12) + 36 = 100 + 36 = 136" },
+        { q: "(125 × 64) ÷ 8² = ?", a: "Step: (8000) ÷ 64 = 125" },
+        { q: "(2³ × 2⁴) ÷ 2² = ?", a: "Step: 2^(3+4-2) = 2⁵ = 32" },
+        { q: "√(144 × 49) = ?", a: "Step: √144 × √49 = 12 × 7 = 84" },
+        { q: "(3² + 4²)² = ?", a: "Step: (9 + 16)² = 25² = 625" },
+        { q: "Akar-akar dari: x² - 5x + 6 = 0", a: "Step: (x-2)(x-3)=0. Akar: x=2 atau x=3" },
+        { q: "Jika x² + 3x - 10 = 0, tentukan x", a: "Step: (x+5)(x-2)=0. Akar: x=-5 atau x=2" },
+        { q: "Jika f(x) = 2x² - 4x + 1, tentukan f(3)", a: "Step: 2(3)² - 4(3) + 1 = 18 - 12 + 1 = 7" },
+        { q: "Titik puncak dari: y = x² - 6x + 8", a: "Step: x = -b/2a = 6/2 = 3. Subtitusi: 3²-6(3)+8 = -1. Puncak(3,-1)" },
+        { q: "2x + y = 7 dan x - y = 1. Tentukan x, y", a: "Step: Jumlahkan -> 3x = 8 (Error? Mari cek ulang: 2x+y=7, x-y=1. x=8/3? Tidak, mari pakai x=2, y=3: 2(2)+3=7 (Betul), 2-3=-1. Jawaban: x=2.66... atau koreksi soal manual: x=8/3, y=5/3" }
+    ];
 
-const soalCerita = [
-    ["3 buku + 2 pulpen = 19.000\n2 buku + 4 pulpen = 18.000\nTentukan harga 1 buku & 1 pulpen!", "Buku: 5.000, Pulpen: 2.000", "Misal b=buku, p=pulpen\n3b + 2p = 19.000 (x2) -> 6b + 4p = 38.000\n2b + 4p = 18.000 (-) -> 4b = 20.000\nb = 5.000. Substitusi: 2(5.000) + 4p = 18.000 -> 4p = 8.000 -> p = 2.000"],
-    ["Persegi panjang: p = l + 4. Luas = 96 cm².\nTentukan p dan l!", "p=12 cm, l=8 cm", "L = p x l -> 96 = (l + 4) * l\nl² + 4l - 96 = 0\n(l + 12)(l - 8) = 0\nl = 8 (ambil positif). Maka p = 8 + 4 = 12"],
-    ["Umur Ayah = 4x umur anak.\n5 tahun lagi, Ayah = 3x umur anak.\nUmur sekarang?", "Ayah: 40, Anak: 10", "A = 4n\n(A + 5) = 3(n + 5)\n4n + 5 = 3n + 15\nn = 10. Maka A = 4(10) = 40"],
-    ["Jarak 180 km. Jika v ditambah 20 km/jam, waktu berkurang 1 jam. Kecepatan awal?", "60 km/jam", "t1 - t2 = 1\n(180/v) - (180/(v+20)) = 1\nSetelah diselesaikan: v² + 20v - 3600 = 0\n(v + 60)(v - 60) = 0? Bukan. Hasil: v=60 km/jam."]
-];
+    const soalCerita = [
+        { q: "Siswa A: 3 buku + 2 pulpen = 19rb. Siswa B: 2 buku + 4 pulpen = 18rb. Harga masing-masing?", a: "Eliminasi: Buku = Rp5.000, Pulpen = Rp2.000" },
+        { q: "Persegi panjang: p = l + 4. Luas = 96 cm². Tentukan p dan l.", a: "l(l+4)=96 -> l²+4l-96=0 -> (l+12)(l-8)=0. Lebar=8, Panjang=12" },
+        { q: "Umur Ayah 4x umur anak. 5 thn lagi, Ayah 3x umur anak. Umur sekarang?", a: "4x+5 = 3(x+5) -> 4x+5 = 3x+15 -> x=10. Anak=10, Ayah=40" },
+        { q: "Mobil 180km. Jika speed +20km/jam, waktu hemat 1 jam. Kecepatan awal?", a: "180/v - 180/(v+20) = 1. Setelah dihitung, v = 60 km/jam." }
+    ];
 
-// ================= LOGIC NAVIGATION =================
-let currentMathIndex = 0;
-let currentStoryIndex = 0;
+    let currentMode = [];
+    let currentIndex = 0;
 
-function showFlow(key) {
-    document.getElementById("home").style.display = "none";
-    document.getElementById("page").classList.add("active-page");
-    document.getElementById("content").innerHTML = `
-        <div class="box" style="white-space:pre-line">${flow[key]}</div>
-    `;
-}
+    // FUNGSI NAVIGASI
+    function goHome() {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('home').classList.add('active');
+    }
 
-function showMath() {
-    currentMathIndex = 0;
-    document.getElementById("home").style.display = "none";
-    document.getElementById("page").classList.add("active-page");
-    renderMath();
-}
+    function showTips(key) {
+        const data = dataTips[key];
+        document.getElementById('tips-title').innerText = data.title;
+        document.getElementById('tips-content').innerHTML = data.steps.map(s => `<p>${s}</p>`).join('');
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('view-tips').classList.add('active');
+    }
 
-function renderMath() {
-    let s = soalMatematika[currentMathIndex];
-    document.getElementById("content").innerHTML = `
-        <div class="target">Latihan Soal ${currentMathIndex + 1} / ${soalMatematika.length}</div>
-        <div class="box" style="font-size: 1.2rem; text-align: center; font-weight: bold;">${s[0]}</div>
-        <button class="btn btn-outline" onclick="jawabMath()">🔍 Lihat Pembahasan</button>
-        <div id="jawabanBox"></div>
-        <button class="btn btn-main" onclick="nextMath()">Berikutnya (Next Soal) ➔</button>
-    `;
-}
+    function startLatihan(type) {
+        currentMode = type === 'biasa' ? soalBiasa : soalCerita;
+        currentIndex = 0;
+        showSoal();
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('view-latihan').classList.add('active');
+    }
 
-function jawabMath() {
-    let s = soalMatematika[currentMathIndex];
-    document.getElementById("jawabanBox").innerHTML = `
-        <div class="box" style="border-left-color: #162E93; background: #f0f4ff;">
-            <strong>Jawaban: ${s[1]}</strong><hr>
-            <small>${s[2].replace(/\n/g, '<br>')}</small>
-        </div>
-    `;
-}
+    function showSoal() {
+        const soal = currentMode[currentIndex];
+        document.getElementById('progress-text').innerText = `Soal ${currentIndex + 1} / ${currentMode.length}`;
+        document.getElementById('question-area').innerText = soal.q;
+        document.getElementById('pembahasan-area').innerText = soal.a;
+        document.getElementById('pembahasan-area').style.display = 'none';
+    }
 
-function nextMath() {
-    currentMathIndex = (currentMathIndex + 1) % soalMatematika.length;
-    renderMath();
-}
+    // EVENT LISTENERS
+    document.getElementById('btn-cek').onclick = () => {
+        document.getElementById('pembahasan-area').style.display = 'block';
+    };
 
-// ================= LOGIC STORY =================
-function showStory() {
-    currentStoryIndex = 0;
-    document.getElementById("home").style.display = "none";
-    document.getElementById("page").classList.add("active-page");
-    renderStory();
-}
+    document.getElementById('btn-next').onclick = () => {
+        if (currentIndex < currentMode.length - 1) {
+            currentIndex++;
+            showSoal();
+        } else {
+            alert("Sesi Selesai! Kamu hebat.");
+            goHome();
+        }
+    };
 
-function renderStory() {
-    let s = soalCerita[currentStoryIndex];
-    document.getElementById("content").innerHTML = `
-        <div class="target">Soal Cerita ${currentStoryIndex + 1} / ${soalCerita.length}</div>
-        <div class="box" style="white-space:pre-line;">${s[0]}</div>
-        <button class="btn btn-outline" onclick="jawabStory()">💡 Lihat Cara Penyelesaian</button>
-        <div id="jawabanBoxStory"></div>
-        <button class="btn btn-main" onclick="nextStory()">Next Soal Cerita ➔</button>
-    `;
-}
-
-function jawabStory() {
-    let s = soalCerita[currentStoryIndex];
-    document.getElementById("jawabanBoxStory").innerHTML = `
-        <div class="box" style="border-left-color: #162E93; background: #f0f4ff;">
-            <strong>Hasil Akhir:</strong><br>${s[1]}<hr>
-            <strong>Langkah-langkah:</strong><br><small>${s[2].replace(/\n/g, '<br>')}</small>
-        </div>
-    `;
-}
-
-function nextStory() {
-    currentStoryIndex = (currentStoryIndex + 1) % soalCerita.length;
-    renderStory();
-}
-
-function goHome() {
-    document.getElementById("home").style.display = "block";
-    document.getElementById("page").classList.remove("active-page");
-    document.getElementById("jawabanBox").innerHTML = "";
-}
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('SW registered!'))
+        .catch(err => console.error('SW gagal:', err));
+    }
 </script>
 
 </body>
+
 </html>

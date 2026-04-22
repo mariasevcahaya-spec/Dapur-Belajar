@@ -1,18 +1,18 @@
 {
   "id": "./",
-  "name": "PWA Template Responsif",
-  "short_name": "PWA Demo",
-  "description": "Aplikasi PWA responsif untuk demonstrasi template dasar Progressive Web App dengan dukungan offline dan installable.",
+  "name": "Dapur Belajar - Matematika SMA",
+  "short_name": "Dapur Belajar",
+  "description": "Platform pembelajaran matematika interaktif untuk siswa SMA yang menyajikan materi, latihan soal, dan pembahasan secara mendalam dan mudah dipahami.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#4F46E5",
+  "background_color": "#67C090",
   "theme_color": "#4F46E5",
   "orientation": "portrait",
   "lang": "id",
   "icons": [
     {
-      "src": "icons/icon-192x192-A.png",
+      "src": "icons/Logo1.png",
       "sizes": "192x192",
       "type": "image/png"
     },

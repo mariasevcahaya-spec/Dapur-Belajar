@@ -24,12 +24,12 @@
   ],
   "screenshots": [
     {
-      "src": "icons/screenshot1.png",
+      "src": "icons/Screenshoot1.png",
       "sizes": "1080x1920",
       "type": "image/png"
     },
     {
-      "src": "icons/screenshot2.png",
+      "src": "icons/Screenshoot2.png",
       "sizes": "1080x1920",
       "type": "image/png"
     }

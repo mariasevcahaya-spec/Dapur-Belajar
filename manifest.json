@@ -5,39 +5,51 @@
   "description": "Platform pembelajaran matematika interaktif untuk siswa SMA yang menyajikan materi, latihan soal, dan pembahasan secara mendalam dan mudah dipahami.",
   "start_url": "./index.html",
   "scope": "./",
+  "dir": "ltr",
+  "lang": "id",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
   "background_color": "#406AAF",
   "theme_color": "#4F46E5",
   "orientation": "portrait",
-  "lang": "id",
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "prefer_related_applications": false,
+  "related_applications": [],
   "icons": [
     {
       "src": "icons/Logo1.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icons/Logo2.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "screenshots": [
     {
       "src": "icons/Screenshoot1.png",
       "sizes": "1080x1920",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Halaman Utama Dapur Belajar"
     },
     {
       "src": "icons/Screenshoot2.png",
       "sizes": "1080x1920",
-      "type": "image/png"
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Latihan Soal Matematika"
     }
   ],
   "shortcuts": [
     {
       "name": "Buka Beranda",
       "short_name": "Home",
+      "description": "Kembali ke halaman utama Dapur Belajar",
       "url": "./index.html",
       "icons": [
         {
@@ -47,8 +59,40 @@
       ]
     }
   ],
-  "categories": [
-    "productivity",
-    "utilities"
-  ]
+  "categories": ["education", "productivity", "utilities"],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "share_target": {
+    "action": "./index.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+dapurbelajar",
+      "url": "./index.html?protocol=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "./index.html",
+      "accept": {
+        "text/plain": [".txt"]
+      }
+    }
+  ],
+  "scope_extensions": [],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "note_taking": {
+    "new_note_url": "./index.html"
+  },
+  "handle_links": "preferred",
+  "capture_links": "none"
 }
